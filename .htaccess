@@ -1,0 +1,2 @@
+# Définir le fichier d'index par défaut
+DirectoryIndex frontend/index.html

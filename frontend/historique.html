@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESGIS - Emploi du temps</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            background-color: white;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7));
+            position: relative;
+        }
+        
+        .logo {
+            width: 180px;
+            margin: 0 auto;
+        }
+        
+        .content {
+            padding: 20px;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuXzAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgcGF0dGVyblRyYW5zZm9ybT0icm90YXRlKDQ1KSI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9IiMwMDdiOTkiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm5fMCkiLz48L3N2Zz4=');
+            background-attachment: fixed;
+        }
+        
+        .table-container {
+            margin-bottom: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid #00789a;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        
+        th {
+            background-color: #00789a;
+            color: white;
+            text-align: left;
+            padding: 12px 15px;
+            font-weight: 600;
+            /* border-right: 1px solid rgba(255, 255, 255, 0.2); */
+        }
+        
+        th:last-child {
+            border-right: none;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            border-right: 1px solid #e0e0e0;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        td:last-child {
+            border-right: none;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .date-col, .time-col {
+            color: #00789a;
+            font-weight: 500;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        
+        .btn {
+            padding: 12px 40px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-close {
+            background-color: #ff6b6b;
+            color: white;
+        }
+        
+        .btn-view {
+            background-color: #00789a;
+            color: white;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+        
+        .footer {
+            background-color: #00789a;
+            height: 30px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgNTAiPjxwYXRoIGQ9Ik0yMCAyNUgxODBNNjAgMTVIODBNMTIwIDE1SDE0ME02MCAzNUg4ME0xMjAgMzVIMTQwIiBzdHJva2U9Im5vbmUiLz48dGV4dCB4PSI1MCIgeT0iMzAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IiNiMjI3MzQiPmVzZ2lzPC90ZXh0PjxwYXRoIGQ9Ik0xNDAgMjBMMTUwIDEwTDE2MCAyMEwxNTAgMzBaIiBmaWxsPSIjZmZkNzAwIiBzdHJva2U9IiNiMjI3MzQiIHN0cm9rZS13aWR0aD0iMC41Ii8+PC9zdmc+" alt="ESGIS Logo" class="logo">
+        </div>
+        <div class="content">
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Filière</th>
+                            <th>Date</th>
+                            <th>H. Début</th>
+                            <th>H. Fin</th>
+                            <th>Cours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>IRT1</td>
+                            <td class="date-col">05/03/2025</td>
+                            <td>14h 30min 48s</td>
+                            <td class="time-col">14h 30min 48s</td>
+                            <td>Analyse des donnée & la progamation</td>
+                        </tr>
+                        <tr>
+                            <td>IRT2</td>
+                            <td class="date-col">05/03/2025</td>
+                            <td>14h 30min 48s</td>
+                            <td class="time-col">14h 30min 48s</td>
+                            <td>Analyse des donnée & la progamation</td>
+                        </tr>
+                        <tr>
+                            <td>SG1</td>
+                            <td class="date-col">05/03/2025</td>
+                            <td>14h 30min 48s</td>
+                            <td class="time-col">14h 30min 48s</td>
+                            <td>Analyse des donnée & la progamation</td>
+                        </tr>
+                        <tr>
+                            <td>CCA2</td>
+                            <td class="date-col">05/03/2025</td>
+                            <td>14h 30min 48s</td>
+                            <td class="time-col">14h 30min 48s</td>
+                            <td>Analyse des donnée & la progamation</td>
+                        </tr>
+                        <tr>
+                            <td>D2</td>
+                            <td class="date-col">05/03/2025</td>
+                            <td>14h 30min 48s</td>
+                            <td class="time-col">14h 30min 48s</td>
+                            <td>Analyse des donnée & la progamation</td>
+                        </tr>
+                        <tr>
+                            <td>SRS-M2</td>
+                            <td class="date-col">05/03/2025</td>
+                            <td>14h 30min 48s</td>
+                            <td class="time-col">14h 30min 48s</td>
+                            <td>Analyse des donnée & la progamation</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="buttons">
+            <button class="btn btn-close">Fermer</button>
+            <button class="btn btn-view">Tout voir</button>
+        </div>
+        <div class="footer"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sélection de cours - ESGIS</title>
+    <!-- Import de la police Poppins depuis Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('http://127.0.0.1:5500/frontend/assets/images/background/bg.jpg') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+}
+
+
+        /* Loader */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        .loader {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(14, 110, 126, 0.3);
+            border-radius: 50%;
+            border-top-color: #0e6e7e;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Main content */
+        .content {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            padding: 30px;
+            /* background-color: #fff; */
+            border-radius: 10px;
+        }
+        
+        .content.visible {
+            opacity: 1;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+            max-width: 150px;
+            height: auto;
+        }
+
+
+
+
+        h1 {
+            color: #0e6e7e;
+            margin-bottom: 10px;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        p {
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .select-group {
+            position: relative;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .select-header {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            cursor: pointer;
+            background-color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .select-header.active {
+            border-color: #0e6e7e;
+        }
+
+        .select-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            z-index: 10;
+            display: none;
+        }
+
+        .select-options.active {
+            display: block;
+        }
+
+        .option-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .option-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        .arrow {
+            transition: transform 0.3s;
+        }
+
+        .select-header.active .arrow {
+            transform: rotate(180deg);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #0e6e7e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 500;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0a5964;
+        }
+
+        
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            background-color: #0e6e7e;
+        }
+    </style>
+</head>
+<body>
+    <!-- Écran de chargement -->
+    <div class="loader-container" id="loaderContainer">
+        <div class="loader"></div>
+    </div>
+    
+    
+    <!-- Contenu principal -->
+    <div class="content" id="mainContent">
+        <!-- <img src="http://127.0.0.1:5500/frontend/assets/images/logo/logo.png" alt="" class="logo"> -->
+
+        <img src="assets/images/logo/logo.png" alt="Logo" class="logo">
+
+        <h1>Sélectionner mon cours</h1>
+        <p>Sélectionnez le cours que vous avez, ainsi que la filière, puis validez pour enregistrer votre arrivée.</p>
+        
+        <div class="select-group">
+            <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+            </div>
+            <div class="select-header" id="courseHeader">
+                <span id="selectedCourse">Sélectionner le cours</span>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="select-options" id="courseOptions">
+                <div class="option-item" data-value="math">Mathématiques</div>
+                <div class="option-item" data-value="info">Informatique</div>
+                <div class="option-item" data-value="prog">Programmation</div>
+                <div class="option-item" data-value="reseaux">Réseaux</div>
+                <div class="option-item" data-value="bd">Bases de données</div>
+                <div class="option-item" data-value="anglais">Anglais</div>
+                <div class="option-item" data-value="python">Python</div>
+            </div>
+        </div>
+        
+        <div class="select-group">
+            <div class="icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </div>
+            <div class="select-header" id="filiereHeader">
+                <span id="selectedFiliere">Sélectionner la filière</span>
+                <span class="arrow">▼</span>
+            </div>
+            <div class="select-options" id="filiereOptions">
+                <div class="option-item" data-value="gl">Génie Logiciel</div>
+                <div class="option-item" data-value="rt">Réseaux et Télécommunications</div>
+                <div class="option-item" data-value="ssi">Sécurité des Systèmes d'Information</div>
+                <div class="option-item" data-value="im">Informatique et Multimédia</div>
+                <div class="option-item" data-value="stic">Sciences et Technologies de l'Information</div>
+            </div>
+        </div>
+        
+        <button id="validateButton">Valider l'arrivée</button>
+    </div>
+    
+    <div class="footer"></div>
+    
+    <script>
+        // Fonction pour simuler le chargement et afficher le contenu principal
+        window.addEventListener('load', function() {
+            const loaderContainer = document.getElementById('loaderContainer');
+            const mainContent = document.getElementById('mainContent');
+            
+            // Afficher le loader pendant 1 seconde
+            setTimeout(function() {
+                // Faire disparaître l'écran de chargement
+                loaderContainer.style.opacity = '0';
+                
+                // Afficher le contenu principal
+                mainContent.classList.add('visible');
+                
+                // Supprimer l'écran de chargement du DOM après la transition
+                setTimeout(function() {
+                    loaderContainer.style.display = 'none';
+                }, 500);
+            }, 1000); // 1000ms = 1 seconde
+            
+            // Fonctionnalité pour les menus déroulants
+            // Cours
+            const courseHeader = document.getElementById('courseHeader');
+            const courseOptions = document.getElementById('courseOptions');
+            const selectedCourse = document.getElementById('selectedCourse');
+            
+            // Filière
+            const filiereHeader = document.getElementById('filiereHeader');
+            const filiereOptions = document.getElementById('filiereOptions');
+            const selectedFiliere = document.getElementById('selectedFiliere');
+            
+            // Fonction pour fermer tous les menus déroulants
+            function closeAllDropdowns() {
+                courseHeader.classList.remove('active');
+                courseOptions.classList.remove('active');
+                filiereHeader.classList.remove('active');
+                filiereOptions.classList.remove('active');
+            }
+            
+            // Gestionnaire pour le menu des cours
+            courseHeader.addEventListener('click', function(e) {
+                e.stopPropagation();
+                courseHeader.classList.toggle('active');
+                courseOptions.classList.toggle('active');
+                
+                // Fermer l'autre menu déroulant si ouvert
+                filiereHeader.classList.remove('active');
+                filiereOptions.classList.remove('active');
+            });
+            
+            // Gestionnaire pour les options de cours
+            courseOptions.querySelectorAll('.option-item').forEach(function(option) {
+                option.addEventListener('click', function() {
+                    selectedCourse.textContent = this.textContent;
+                    courseHeader.classList.remove('active');
+                    courseOptions.classList.remove('active');
+                });
+            });
+            
+            // Gestionnaire pour le menu des filières
+            filiereHeader.addEventListener('click', function(e) {
+                e.stopPropagation();
+                filiereHeader.classList.toggle('active');
+                filiereOptions.classList.toggle('active');
+                
+                // Fermer l'autre menu déroulant si ouvert
+                courseHeader.classList.remove('active');
+                courseOptions.classList.remove('active');
+            });
+            
+            // Gestionnaire pour les options de filière
+            filiereOptions.querySelectorAll('.option-item').forEach(function(option) {
+                option.addEventListener('click', function() {
+                    selectedFiliere.textContent = this.textContent;
+                    filiereHeader.classList.remove('active');
+                    filiereOptions.classList.remove('active');
+                });
+            });
+            
+            // Fermer les menus déroulants quand on clique ailleurs sur la page
+            document.addEventListener('click', function() {
+                closeAllDropdowns();
+            });
+            
+            // Empêcher la propagation du clic sur les options
+            courseOptions.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+            
+            filiereOptions.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+            
+            // Gestionnaire pour le bouton de validation
+            const validateButton = document.getElementById('validateButton');
+            validateButton.addEventListener('click', function() {
+                const course = selectedCourse.textContent;
+                const filiere = selectedFiliere.textContent;
+                
+                if (course === "Sélectionner le cours" || filiere === "Sélectionner la filière") {
+                    alert("Veuillez sélectionner un cours et une filière avant de valider.");
+                } else {
+                    alert(`Arrivée validée pour le cours "${course}" dans la filière "${filiere}".`);
+                    // Ici, vous pourriez rediriger ou envoyer les données à un serveur
+                }
+            });
+        });
+    </script>
+</body>
+</html>

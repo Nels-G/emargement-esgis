@@ -1,0 +1,60 @@
+📂 Projet
+│
+├── 📁 frontend (HTML, CSS, JS)
+│   ├── 📁 css (styles)
+│   ├── 📁 js (scripts)
+│   ├── 📁 assets (images, icônes)
+│   ├── index.html (Page d’entrée)
+│   ├── login.html (Page de connexion)
+│   ├── dashboard.html (Dashboard principal)
+│   ├── emargement.html (Sélection de cours et validation de présence)
+│   ├── historique.html (Liste des présences du jour du prof)
+│   ├── cours.html (Gestion des cours)
+│   ├── profs.html (Gestion des profs)
+│   ├── filieres.html (Gestion des filières)
+│   └── autres pages selon besoins
+│
+├── 📁 backend (PHP)
+│   ├── 📁 controllers (Gestion des requêtes)
+│   │   ├── AuthController.php (Gestion de la connexion et déconnexion des profs)
+│   │   ├── CoursController.php (Gestion des cours)
+│   │   ├── ProfController.php (Gestion des profs)
+│   │   ├── FiliereController.php (Gestion des filières)
+│   │   ├── EmargementController.php (Gestion des présences)
+│   │   ├── DashboardController.php (Données pour le tableau de bord)
+│   │
+│   ├── 📁 models (Requêtes SQL et interaction avec la base de données)
+│   │   ├── AuthModel.php (Gestion des utilisateurs)
+│   │   ├── CoursModel.php (Gestion des cours)
+│   │   ├── ProfModel.php (Gestion des profs)
+│   │   ├── FiliereModel.php (Gestion des filières)
+│   │   ├── EmargementModel.php (Gestion des présences)
+│   │   ├── DashboardModel.php (Gestion des stats du tableau de bord)
+│   │
+│   ├── 📁 views (Affichage des pages HTML via PHP)
+│   │   ├── login.php (Page de connexion)
+│   │   ├── dashboard.php (Page principale du tableau de bord)
+│   │   ├── emargement.php (Page de gestion des présences)
+│   │   ├── historique.php (Page d’historique des présences)
+│   │   ├── cours.php (Page de gestion des cours)
+│   │   ├── profs.php (Page de gestion des profs)
+│   │   ├── filieres.php (Page de gestion des filières)
+│   │
+│   ├── 📁 config (Configuration de la base de données et des paramètres)
+│   │   ├── database.php (Connexion à la base de données MySQL)
+│   │   └── config.php (Paramètres généraux)
+│   │
+│   ├── index.php (Page d'accueil, redirection vers la page d'entrée)
+│   ├── auth.php (Authentification et gestion des utilisateurs)
+│   ├── emargement.php (Enregistrement des présences et départs)
+│   ├── dashboard.php (Affichage des données statistiques)
+│   ├── cours.php (Ajout, édition, suppression des cours)
+│   ├── profs.php (Ajout, gestion des professeurs)
+│   ├── filieres.php (Gestion des filières)
+│   └── autres fichiers selon besoins
+│
+├── 📁 database (MySQL)
+│   ├── structure.sql (Fichier SQL pour créer la base et les tables)
+│   └── backup.sql (Sauvegarde éventuelle de la base de données)
+│
+└── README.md (Documentation du projet)

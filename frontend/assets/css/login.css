@@ -1,0 +1,96 @@
+/* Main content */
+.content {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    padding: 20px;
+}
+
+.content.visible {
+    opacity: 1;
+}
+
+.logo {
+    margin-bottom: 30px;
+    max-width: 150px;
+}
+
+h1 {
+    color: #0e6e7e;
+    margin-bottom: 10px;
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+p {
+    color: #333;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 15px 15px 15px 45px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    color: #777;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background-color: #0e6e7e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: 500;
+}
+
+button:hover {
+    background-color: #0a5964;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    background-color: #0e6e7e;
+}
